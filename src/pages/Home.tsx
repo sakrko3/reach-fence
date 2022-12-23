@@ -12,8 +12,8 @@ const Home = (props: Props) => {
 
   const fetchContactsFromLocalStorage = () => {
     for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      const value = JSON.parse(localStorage.getItem(key));
+      const key = localStorage.key(i)!;
+      const value = JSON.parse(localStorage.getItem(key)!);
       updateContacts((arr: any) => [
         ...arr,
         {
