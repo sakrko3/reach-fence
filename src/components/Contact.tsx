@@ -6,15 +6,42 @@ import {
   ChatBubbleBottomCenterTextIcon,
 } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
-import { SocialIcon } from "react-social-icons";
+import { useState } from "react";
 
 type Props = {
   contact: any;
+  id: number;
 };
 
 const Contact = (props: Props) => {
+  const [modal, setModal] = useState(false);
+  const deleteContact = (id: number) => {
+    localStorage.removeItem(id.toString());
+    window.location.reload();
+  };
   return (
-    <article className="flex items-center justify-center rounded-lg bg-white py-3 drop-shadow-2xl ">
+    <article className="flex items-center justify-center rounded-lg bg-white py-3 drop-shadow-2xl">
+      {modal ? (
+        <div className="absolute w-full h-full rounded-lg bg-white/20 backdrop-blur-md flex flex-col gap-2 justify-center items-center text-xs font-medium text-red-500">
+          <p>Are you sure you want to delete?</p>
+          <div>
+            <button
+              onClick={() => deleteContact(props.id)}
+              className="px-5 py-2.5 text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:ring-blue-300 rounded-lg mr-2"
+            >
+              Yes
+            </button>
+            <button
+              onClick={() => setModal(!modal)}
+              className="px-5 py-2.5 text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 rounded-lg"
+            >
+              No
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="basis-1/3 flex items-center justify-center">
         <img
           src={props.contact.profilePicture}
@@ -56,7 +83,10 @@ const Contact = (props: Props) => {
         >
           <PencilIcon className="  h-5 w-5" />
         </Link>
-        <button className="p-2 rounded-full border border-red-500 text-red-500 hover:text-white hover:bg-red-500 focus:ring-red-300">
+        <button
+          onClick={() => setModal(!modal)}
+          className="p-2 rounded-full border border-red-500 text-red-500 hover:text-white hover:bg-red-500 focus:ring-red-300"
+        >
           <TrashIcon className=" h-5 w-5" />
         </button>
       </div>
