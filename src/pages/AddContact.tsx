@@ -20,23 +20,24 @@ const AddContact = (props: Props) => {
   //   });
   // };
 
-  const imageUpload = (e: any) => {
-    const file = e.target.files[0];
-    resizeFile(file).then((base64) => {
-      setImg(base64 as string);
-      console.debug("file stored", base64);
-    });
-  };
-
-  // const imageUpload = async (event: any) => {
-  //   try {
-  //     const file = event.target.files[0];
-  //     const image = await resizeFile(file);
-  //     setImg(image as string);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
+  // const imageUpload = (e: any) => {
+  //   const file = e.target.files[0];
+  //   resizeFile(file).then((base64) => {
+  //     setImg(base64 as string);
+  //     console.debug("file stored", base64);
+  //   });
   // };
+
+  const imageUpload = async (event: any) => {
+    try {
+      const file = event.target.files[0];
+      const image = await resizeFile(file);
+      console.log("This is" + image);
+      setImg(image as string);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const resizeFile = (file: any) =>
     new Promise((resolve) => {
