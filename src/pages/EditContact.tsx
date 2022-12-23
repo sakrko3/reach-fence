@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { Form, Navigate, useNavigate } from "react-router-dom";
+import { Form, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Resizer from "react-image-file-resizer";
 
 type Props = {};
 
-const AddContact = (props: Props) => {
+const EditContact = (props: Props) => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
-
+  const { contactId } = useParams();
   const [img, setImg] = useState("");
 
   const getBase64 = (file: any) => {
@@ -30,15 +30,12 @@ const AddContact = (props: Props) => {
 
   const onSubmit = (data: any) => {
     data["profilePicture"] = img;
-    const key = localStorage.length + 1;
-    localStorage.setItem(key.toString(), JSON.stringify(data));
+    localStorage.setItem(contactId!, JSON.stringify(data));
     navigate("/", { replace: true });
   };
   return (
     <section className="pt-24 max-w-md mx-auto">
-      <h1 className="font-light text-2xl text-gray-500 mb-6">
-        Create A Contact
-      </h1>
+      <h1 className="font-light text-2xl text-gray-500 mb-6">Edit A Contact</h1>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-6">
           <label
@@ -130,4 +127,4 @@ const AddContact = (props: Props) => {
   );
 };
 
-export default AddContact;
+export default EditContact;

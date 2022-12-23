@@ -6,6 +6,7 @@ import Root from "./pages/Root";
 import Error from "./pages/Error";
 import Home from "./pages/Home";
 import AddContact from "./pages/AddContact";
+import EditContact from "./pages/EditContact";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "add-contact",
         element: <AddContact />,
+      },
+      {
+        path: "edit-contact/:contactId",
+        element: <EditContact />,
       },
     ],
   },

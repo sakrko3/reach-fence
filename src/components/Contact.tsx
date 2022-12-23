@@ -78,7 +78,7 @@ const Contact = (props: Props) => {
       </div>
       <div className="basis-1/3 flex items-center justify-center gap-2">
         <Link
-          to="edit-contact"
+          to={`edit-contact/${props.id}`}
           className="p-2 rounded-full border border-blue-500 text-blue-500 hover:text-white hover:bg-blue-500 focus:ring-blue-300"
         >
           <PencilIcon className="  h-5 w-5" />
