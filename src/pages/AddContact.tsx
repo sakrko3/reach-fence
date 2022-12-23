@@ -11,49 +11,22 @@ const AddContact = (props: Props) => {
 
   const [img, setImg] = useState("");
 
-  // const getBase64 = (file: any) => {
-  //   return new Promise((resolve, reject) => {
-  //     const reader: any = new FileReader();
-  //     reader.onload = () => resolve(reader.result);
-  //     reader.onabort = (error: any) => reject(error);
-  //     reader.readAsDataURL(file);
-  //   });
-  // };
-
-  // const imageUpload = (e: any) => {
-  //   const file = e.target.files[0];
-  //   resizeFile(file).then((base64) => {
-  //     setImg(base64 as string);
-  //     console.debug("file stored", base64);
-  //   });
-  // };
-
-  const imageUpload = async (event: any) => {
-    try {
-      const file = event.target.files[0];
-      const image = await resizeFile(file);
-      console.log("This is" + image);
-      setImg(image as string);
-    } catch (err) {
-      console.log(err);
-    }
+  const getBase64 = (file: any) => {
+    return new Promise((resolve, reject) => {
+      const reader: any = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onabort = (error: any) => reject(error);
+      reader.readAsDataURL(file);
+    });
   };
 
-  const resizeFile = (file: any) =>
-    new Promise((resolve) => {
-      Resizer.imageFileResizer(
-        file,
-        100,
-        100,
-        "JPEG",
-        100,
-        0,
-        (uri) => {
-          resolve(uri);
-        },
-        "base64"
-      );
+  const imageUpload = (e: any) => {
+    const file = e.target.files[0];
+    getBase64(file).then((base64) => {
+      setImg(base64 as string);
+      console.debug("file stored", base64);
     });
+  };
 
   const onSubmit = (data: any) => {
     data["profilePicture"] = img;
