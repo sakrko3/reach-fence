@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Resizer from "react-image-file-resizer";
@@ -6,7 +6,7 @@ import Resizer from "react-image-file-resizer";
 type Props = {};
 
 const EditContact = (props: Props) => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   const navigate = useNavigate();
   const { contactId } = useParams();
   const [img, setImg] = useState("");
@@ -33,6 +33,15 @@ const EditContact = (props: Props) => {
     localStorage.setItem(contactId!, JSON.stringify(data));
     navigate("/", { replace: true });
   };
+
+  useEffect(() => {
+    const contact = JSON.parse(localStorage.getItem(contactId!)!);
+    setValue("name", contact.name);
+    setValue("phone", contact.phone);
+    setValue("type", contact.type);
+    setValue("isWhatsapp", contact.isWhatsapp);
+    setImg(contact.profilePicture);
+  }, []);
   return (
     <section className="pt-24 max-w-md mx-auto">
       <h1 className="font-light text-2xl text-gray-500 mb-6">Edit A Contact</h1>
@@ -113,7 +122,6 @@ const EditContact = (props: Props) => {
             type="file"
             onChange={imageUpload}
             name="profilePicture"
-            
           />
         </div>
         <button
